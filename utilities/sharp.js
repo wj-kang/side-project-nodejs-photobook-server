@@ -5,7 +5,7 @@ function imgResizing(size) {
     .resize({
       width: size,
       height: size,
-      fit: 'inside',
+      fit: 'contain',
     })
     .toFormat('jpeg')
     .jpeg({
