@@ -5,10 +5,9 @@ module.exports = {
   post: async (req, res) => {
     // image url locations are stored in req.files through multer middleware
     const { text, albumId } = req.body;
-    if (!req.files['image1'][0].transforms) {
+    if (!req.files['photo1'][0].transforms) {
       return res.status(400).end();
     }
-
     function getPhotoUrl(type, name) {
       return req.files[name] && req.files[name][0].transforms.filter((el) => el.id === type)[0].location;
     }
