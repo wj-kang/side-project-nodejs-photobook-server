@@ -8,11 +8,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      thumbnail: {
+      albumTag: {
         type: Sequelize.STRING,
       },
-      count: {
-        type: Sequelize.INTEGER,
+      albumName: {
+        type: Sequelize.STRING,
       },
       userId: {
         type: Sequelize.INTEGER,
@@ -21,9 +21,6 @@ module.exports = {
           key: 'id',
         },
         onDelete: 'CASCADE',
-      },
-      sharedUrl: {
-        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
