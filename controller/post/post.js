@@ -1,6 +1,33 @@
 const { Post } = require('../../models');
 
 module.exports = {
+  get: async (req, res) => {
+    const { postId } = req.params;
+    if (!postId) {
+      return res.status(400).end();
+    }
+    try {
+      let post = await Post.findOne({
+        where: { id: postId },
+        attributes: ['photo1', 'photo2', 'photo3', 'text'],
+      });
+      post = post.toJSON();
+      const { photo1, photo2, photo3, text } = post;
+
+      const data = {
+        photos: {
+          photo1,
+          photo2,
+          photo3,
+        },
+        text,
+      };
+
+      res.status(200).json(data);
+    } catch (err) {
+      console.error(err);
+    }
+  },
   // new post
   post: async (req, res) => {
     // image url locations are stored in req.files through multer middleware
@@ -31,6 +58,28 @@ module.exports = {
       res.status(201).json(data);
     } catch (error) {
       console.error(error);
+      res.status(500).end();
+    }
+  },
+  delete: async (req, res) => {
+    const { postId } = req.params;
+    if (!postId) {
+      return res.status(400).end();
+    }
+
+    try {
+      const postDeleted = await Post.destroy({
+        where: {
+          id: postId,
+        },
+      });
+      if (postDeleted !== 1) {
+        // matched nothinge
+        return res.status(403).json({ error: '403 Forbidden' });
+      }
+      res.status(200).json({ msg: 'post deleted' });
+    } catch (err) {
+      console.error(err);
       res.status(500).end();
     }
   },
