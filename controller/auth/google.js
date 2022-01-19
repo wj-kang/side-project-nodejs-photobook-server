@@ -1,8 +1,8 @@
 const axios = require('axios');
 const jwtUtility = require('../../utilities/jwt');
-const client_id = process.env.GOOGLE_CLIENT_ID;
-const client_secret = process.env.GOOGLE_CLIENT_SECRET;
-const redirect_uri = process.env.GOOGLE_REDIRECT_URI;
+const client_id = process.env.PHOTOBOOK_GOOGLE_CLIENT_ID;
+const client_secret = process.env.PHOTOBOOK_GOOGLE_CLIENT_SECRET;
+const redirect_uri = process.env.PHOTOBOOK_GOOGLE_REDIRECT_URI;
 //
 const { User } = require('../../models');
 const { createSampleData } = require('../../utilities/sampleData');
@@ -29,7 +29,7 @@ module.exports = async (req, res) => {
       },
       defaults: {
         username: getData.data[0].email.split('@')[0],
-        password: process.env.DEFAULT_PASSWORD,
+        password: process.env.PHOTOBOOK_DEFAULT_PASSWORD,
       },
     });
     const token = jwtUtility.createSignedToken(user[0].id);
@@ -44,7 +44,7 @@ module.exports = async (req, res) => {
         sameSite: 'none',
         domain: '.wonjunkang.com',
       })
-      .redirect(`${process.env.CLIENT_BASE_URL}/main/albums`);
+      .redirect(`${process.env.PHOTOBOOK_CLIENT_BASE_URL}/main/albums`);
   } catch (error) {
     console.error(error);
     res.status(500).end();

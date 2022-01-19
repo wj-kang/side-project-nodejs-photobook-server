@@ -8,7 +8,7 @@ const { nanoid } = require('nanoid');
 const upload = multer({
   storage: multerS3({
     s3: AWS_S3,
-    bucket: process.env.AWS_S3_BUTKET_NAME,
+    bucket: process.env.PHOTOBOOK_AWS_S3_BUTKET_NAME,
     cacheControl: 'max-age=600000',
     contentType: multerS3.AUTO_CONTENT_TYPE,
     shouldTransform: true,

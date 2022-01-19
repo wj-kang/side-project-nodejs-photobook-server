@@ -6,14 +6,14 @@ const jwtUtility = require('./utilities/jwt');
 require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PHOTOBOOK_PORT || 4000;
 
 // Middlewares
 app.use(
   express.json(),
   express.urlencoded({ extended: false }),
   cookieParser(),
-  morgan(`${process.env.NODE_ENV === 'production' ? 'combined' : 'dev'}`),
+  morgan(`${process.env.PHOTOBOOK_NODE_ENV === 'production' ? 'combined' : 'dev'}`),
   cors({
     origin: true,
     credentials: true,

@@ -21,7 +21,7 @@ module.exports = async (req, res) => {
         sameSite: 'none',
         domain: '.wonjunkang.com',
       })
-      .redirect(`${process.env.CLIENT_BASE_URL}/main/albums`);
+      .redirect(`${process.env.PHOTOBOOK_CLIENT_BASE_URL}/main/albums`);
   } catch (error) {
     console.error(error);
     res.status(500).end();

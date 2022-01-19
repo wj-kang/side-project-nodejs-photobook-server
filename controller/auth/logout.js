@@ -7,5 +7,5 @@ module.exports = (req, res) => {
       domain: '.wonjunkang.com',
     })
     .status(200)
-    .redirect(`${process.env.CLIENT_BASE_URL}/main/albums`);
+    .redirect(`${process.env.PHOTOBOOK_CLIENT_BASE_URL}/main/albums`);
 };
