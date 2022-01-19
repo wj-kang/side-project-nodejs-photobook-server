@@ -8,33 +8,32 @@ module.exports = {
     }
 
     try {
-      const albums = await Album.findAll({
+      let albums = await Album.findAll({
         where: { userId },
-        // order: [['id', 'DESC']],
+        order: [['id', 'DESC']],
         attributes: [['id', 'albumId'], 'albumName', 'albumTag'],
         include: {
           model: Post,
           attributes: [['thumbnail', 'thumbnailUrl']],
         },
       });
+      albums = albums.map((album) => album.toJSON());
 
-      function convertToObject(albums) {
-        const albumIds = albums.map((album) => album.dataValues.albumId);
+      function formatting(albums) {
+        const albumIds = albums.map((album) => album.albumId);
         const albumInfoById = {};
-        albums.forEach(({ dataValues }) => {
-          albumInfoById[dataValues.albumId] = {
-            albumId: dataValues.albumId,
-            albumTag: dataValues.albumTag,
-            albumName: dataValues.albumName,
-            thumbnailUrl: dataValues.Posts[0].dataValues.thumbnailUrl,
-            count: dataValues.Posts.reduce((acc) => (acc = acc + 1), 0), // counting
+        albums.forEach((album) => {
+          albumInfoById[album.albumId] = {
+            albumId: album.albumId,
+            albumTag: album.albumTag,
+            albumName: album.albumName,
+            thumbnailUrl: album.Posts.length > 0 ? album.Posts[0].thumbnailUrl : undefined,
+            count: album.Posts.reduce((acc) => (acc = acc + 1), 0), // counting
           };
         });
         return { albumIds, albumInfoById };
       }
-
-      res.status(200).json(convertToObject(albums));
-      //
+      res.status(200).json(formatting(albums));
     } catch (err) {
       console.error(err);
       res.status(500).end();
