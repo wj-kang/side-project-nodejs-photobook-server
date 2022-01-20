@@ -20,7 +20,7 @@ module.exports = {
       console.log('token verified. userId: ', decoded.id);
       next();
     } catch (error) {
-      return res.status(401).json({ error: '401 Unauthorized' });
+      return res.redirect(301, 'https://photobook.wonjunkang.com');
     }
   },
 };
