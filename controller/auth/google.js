@@ -20,7 +20,7 @@ module.exports = async (req, res) => {
       },
       withCredentials: true,
     });
-    const { email } = await jwtUtility.decode(id_token);
+    const { email } = await jwtUtility.decodeToken(id_token);
 
     let user = await User.findOne({
       where: {
