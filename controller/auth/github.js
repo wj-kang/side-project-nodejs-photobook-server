@@ -41,7 +41,7 @@ module.exports = async (req, res) => {
       },
     });
     if (!user) {
-      user = await User.Create({
+      user = await User.create({
         email: getData.data[0].email,
         type: 'GITHUB',
         password: process.env.PHOTOBOOK_DEFAULT_PASSWORD,

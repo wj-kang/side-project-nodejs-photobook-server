@@ -29,7 +29,7 @@ module.exports = async (req, res) => {
       },
     });
     if (!user) {
-      user = await User.Create({
+      user = await User.create({
         email,
         type: 'GOOGLE',
         password: process.env.PHOTOBOOK_DEFAULT_PASSWORD,
