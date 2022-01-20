@@ -11,7 +11,7 @@ module.exports = {
 
     try {
       let album = await Album.findOne({
-        where: { id: albumId, userId },
+        where: { albumTag: albumId, userId },
         attributes: [['id', 'albumId'], 'albumName', 'albumTag'],
         include: {
           model: Post,
@@ -52,9 +52,9 @@ module.exports = {
         albumName,
         albumTag: `${userId}${nanoid(8)}`,
       });
-      const { albumId, albumTag } = albumCreated;
+      const { id, albumTag } = albumCreated;
       res.status(200).json({
-        albumId,
+        albumId: id,
         albumName,
         albumTag,
         count: 0,

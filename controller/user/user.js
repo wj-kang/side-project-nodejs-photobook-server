@@ -6,20 +6,27 @@ module.exports = {
     if (!userId) {
       return res.status(400).end();
     }
-    let user = await User.findOne({
-      where: { id: userId },
-    });
-    user = user.toJSON();
-    const { email, type } = user;
-    res.status(200).json({ email, type });
+    try {
+      let user = await User.findOne({
+        where: { id: userId },
+      });
+      user = user.toJSON();
+      const { email, type } = user;
+      res.status(200).json({ email, type });
+    } catch (err) {
+      console.error(err);
+      res.status(500).end();
+    }
   },
   delete: async (req, res) => {
-    const userId = req.params;
+    const userId = req.userId;
     try {
       await User.destroy({
         where: { id: userId },
       });
-      res.status(201).json({ msg: 'user deleted' });
+      // res.status(201).json({ msg: 'user deleted' });
+      res.redirect(301, process.env.PHOTOBOOK_CLIENT_BASE_URL);
+
       //
     } catch (error) {
       console.error(error);

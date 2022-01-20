@@ -40,14 +40,13 @@ module.exports = async (req, res) => {
     await createSampleData(user[0].id);
 
     res
-      .status(302)
       .cookie('token', token, {
         httpOnly: true,
         secure: true,
         sameSite: 'none',
         domain: '.wonjunkang.com',
       })
-      .redirect(`${process.env.PHOTOBOOK_CLIENT_BASE_URL}/main/albums`);
+      .redirect(301, `${process.env.PHOTOBOOK_CLIENT_BASE_URL}/main/albums`);
   } catch (error) {
     console.error(error);
     res.status(500).end();

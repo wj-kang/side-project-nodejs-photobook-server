@@ -51,11 +51,8 @@ module.exports = {
         albumId: Number(albumId),
         ...pictures,
       });
-      const data = {
-        postId: postCreated.id,
-        thumbnailUrl: postCreated.thumbnail,
-      };
-      res.status(201).json(data);
+
+      res.status(201).json({ postId: postCreated.id, thumbnailUrl: postCreated.thumbnail });
     } catch (error) {
       console.error(error);
       res.status(500).end();
