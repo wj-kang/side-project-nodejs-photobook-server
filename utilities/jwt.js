@@ -16,6 +16,8 @@ module.exports = {
   verifyTokenMiddleware: (req, res, next) => {
     try {
       const decoded = jwt.verify(req.cookies.token, process.env.PHOTOBOOK_JWT_SECRET_KEY);
+      req.userId = decoded.id;
+      console.log('token verified. userId: ', decoded.id);
       next();
     } catch (error) {
       return res.status(401).json({ error: '401 Unauthorized' });

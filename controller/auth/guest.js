@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
     const userCreated = await User.create({
       type: 'GUEST',
       email: 'GUEST',
-      password: process.env.DEFAULT_PASSWORD,
+      password: process.env.PHOTOBOOK_DEFAULT_PASSWORD,
     });
     const token = jwtUtility.createSignedToken(userCreated.id);
     // create sample data
@@ -21,7 +21,7 @@ module.exports = async (req, res) => {
         sameSite: 'none',
         domain: '.wonjunkang.com',
       })
-      .redirect(`${process.env.PHOTOBOOK_CLIENT_BASE_URL}/main/albums`);
+      .json({ msg: 'success' });
   } catch (error) {
     console.error(error);
     res.status(500).end();
