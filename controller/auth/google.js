@@ -22,19 +22,22 @@ module.exports = async (req, res) => {
     });
     const { email } = await jwtUtility.decode(id_token);
 
-    const user = await User.findOrCreate({
+    let user = await User.findOne({
       where: {
         email,
         type: 'GOOGLE',
       },
-      defaults: {
-        username: getData.data[0].email.split('@')[0],
-        password: process.env.PHOTOBOOK_DEFAULT_PASSWORD,
-      },
     });
-    const token = jwtUtility.createSignedToken(user[0].id);
-    // create sample data
-    await createSampleData(user[0].id);
+    if (!user) {
+      user = await User.Create({
+        email,
+        type: 'GOOGLE',
+        password: process.env.PHOTOBOOK_DEFAULT_PASSWORD,
+      });
+      // create sample data
+      await createSampleData(user.id);
+    }
+    const token = jwtUtility.createSignedToken(user.id);
 
     res
       .cookie('token', token, {
@@ -43,7 +46,7 @@ module.exports = async (req, res) => {
         sameSite: 'none',
         domain: '.wonjunkang.com',
       })
-      .redirect(301, `${process.env.PHOTOBOOK_CLIENT_BASE_URL}/main/albums`);
+      .redirect(302, `${process.env.PHOTOBOOK_CLIENT_BASE_URL}/main`);
   } catch (error) {
     console.error(error);
     res.status(500).end();
