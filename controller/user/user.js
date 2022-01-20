@@ -26,13 +26,14 @@ module.exports = {
       });
       // res.status(201).json({ msg: 'user deleted' });
       res
+        .status(201)
         .clearCookie('token', {
           httpOnly: true,
           secure: true,
           sameSite: 'none',
           domain: '.wonjunkang.com',
         })
-        .redirect(301, process.env.PHOTOBOOK_CLIENT_BASE_URL);
+        .json({ msg: 'user deleted' });
 
       //
     } catch (error) {

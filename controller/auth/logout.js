@@ -6,5 +6,6 @@ module.exports = (req, res) => {
       sameSite: 'none',
       domain: '.wonjunkang.com',
     })
-    .redirect(301, process.env.PHOTOBOOK_CLIENT_BASE_URL);
+    .status(200)
+    .end();
 };
