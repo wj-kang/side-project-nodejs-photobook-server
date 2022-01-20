@@ -20,7 +20,7 @@ module.exports = {
       console.log('token verified. userId: ', decoded.id);
       next();
     } catch (error) {
-      return res.redirect(301, 'https://photobook.wonjunkang.com');
+      return res.redirect(302, '/');
     }
   },
 };
