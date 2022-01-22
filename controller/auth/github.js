@@ -17,23 +17,12 @@ module.exports = async (req, res) => {
         accept: 'application/json',
       },
     });
-
     const getData = await axios.get('https://api.github.com/user/emails', {
       headers: {
         Authorization: `token ${access_token}`,
       },
     });
 
-    // const user = await User.findOrCreate({
-    //   where: {
-    //     email: getData.data[0].email,
-    //     type: 'GITHUB',
-    //   },
-    //   defaults: {
-    //     username: getData.data[0].email.split('@')[0],
-    //     password: process.env.PHOTOBOOK_DEFAULT_PASSWORD,
-    //   },
-    // });
     let user = await User.findOne({
       where: {
         email: getData.data[0].email,
