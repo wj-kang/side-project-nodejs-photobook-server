@@ -24,6 +24,7 @@ app.use(
 app.get('/', (req, res) => {
   res.status(200).send('server on');
 });
+app.use('/shared', require('./routes/shared'));
 app.use('/auth', require('./routes/auth'));
 
 app.use((req, res, next) => {
