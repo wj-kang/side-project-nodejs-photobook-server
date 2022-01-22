@@ -1,4 +1,5 @@
 const { Post, Album } = require('../../models');
+const jwtUtility = require('../../utilities/jwt');
 
 module.exports = {
   get: async (req, res) => {
@@ -36,7 +37,15 @@ module.exports = {
         });
         return { albumId, albumName, albumTag, postIds, postThumbnailById };
       }
-      res.status(200).json(formatting(album));
+      res
+        .status(200)
+        .cookie('token', jwtUtility.createSignedToken(-999), {
+          httpOnly: true,
+          secure: true,
+          sameSite: 'none',
+          domain: '.wonjunkang.com',
+        })
+        .json(formatting(album));
     } catch (err) {
       console.error(err);
       res.status(500).end();
