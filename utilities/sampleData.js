@@ -118,13 +118,13 @@ module.exports = {
     try {
       const { id } = await Album.create({
         userId,
-        albumName: '[Sample] Leo&Mino🐈',
+        albumName: '(Sample) Leo&Mino🐈',
         albumTag: `${userId}${nanoid(8)}`,
       });
 
       await Album.create({
         userId,
-        albumName: 'Empty Album',
+        albumName: '(Sample) Empty',
         albumTag: `${userId}${nanoid(8)}`,
       });
 
